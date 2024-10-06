@@ -12,16 +12,30 @@ const MovieDetailsPage = () => {
         fetchMovieDetails(movieId).then(setMovie).catch(console.error);
     }, [movieId]);
 
+    if (!movie) {
+        return <p>Loading...</p>;
+    }
+
+    const { title, release_date, vote_average, overview, genres, poster_path } = movie;
+    const posterUrl = poster_path
+        ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+        : 'https://via.placeholder.com/500x750?text=No+Image';
+
     return (
         <div>
             <Link to={backLink.current}>Go back</Link> {/* Используем сохранённый маршрут для возврата */}
 
             {movie && (
                 <>
-                    <h1>{movie.title} ({movie.release_date.slice(0, 4)})</h1>
-                    <p>User Score: {movie.vote_average * 10}%</p>
-                    <p>{movie.overview}</p>
-                    <p><b>Genres:</b> {movie.genres.map(genre => genre.name).join(', ')}</p>
+                    <div style={{ display: 'flex', gap: '20px' }}>
+                        <img src={posterUrl} alt={title} width="300" />
+                        <div>
+                            <h1>{title} ({release_date.slice(0, 4)})</h1>
+                            <p>User Score: {vote_average * 10}%</p>
+                            <p>{overview}</p>
+                            <p><b>Genres:</b> {genres.map(genre => genre.name).join(', ')}</p>
+                        </div>
+                    </div>
 
                     <h3>Additional Information</h3>
                     <ul>
