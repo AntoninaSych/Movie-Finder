@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchTrendingMovies, searchMovies } from '../api';
 import SearchForm from '../components/SearchForm';
+import '../css/HomePage.css';
+
 
 const HomePage = () => {
     const [query, setQuery] = useState('');

@@ -1,0 +1,22 @@
+.reviews-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.review-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.review-item h3 {
+    margin: 0;
+    color: #333;
+}
+
+.review-item p {
+    font-size: 14px;
+    line-height: 1.6;
+}

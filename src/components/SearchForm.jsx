@@ -1,9 +1,9 @@
-// src/components/SearchForm.jsx
 import React from 'react';
+import '../css/SearchForm.css';
 
 const SearchForm = ({ query, setQuery, handleSearch }) => {
     return (
-        <form onSubmit={handleSearch}>
+        <form className="search-form" onSubmit={handleSearch}>
             <input
                 type="text"
                 value={query}

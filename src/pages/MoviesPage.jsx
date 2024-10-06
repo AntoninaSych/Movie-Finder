@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { searchMovies } from '../api';
 import SearchForm from '../components/SearchForm';
+import '../css/MoviesPage.css';
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState([]);

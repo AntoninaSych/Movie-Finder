@@ -1,0 +1,21 @@
+
+.cast-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.cast-item {
+    flex: 0 1 calc(25% - 10px);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cast-item img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.cast-item p {
+    margin: 5px 0;
+}

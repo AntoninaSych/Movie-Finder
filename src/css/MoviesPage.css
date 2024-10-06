@@ -1,0 +1,14 @@
+
+.movies-page h1 {
+    text-align: center;
+    color: #333;
+}
+
+.movies-page ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.movies-page li {
+    margin: 10px 0;
+}
