@@ -1,34 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { getMovieDetails } from '../api';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, Link, useLocation, Outlet } from 'react-router-dom';
+import { fetchMovieDetails } from '../api';
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams();
     const [movie, setMovie] = useState(null);
     const location = useLocation();
-    const backLink = location.state?.from || '/movies';
+    const backLink = useRef(location.state?.from ?? '/movies'); // сохраняем откуда пришли
 
     useEffect(() => {
-        getMovieDetails(movieId).then(setMovie);
+        fetchMovieDetails(movieId).then(setMovie).catch(console.error);
     }, [movieId]);
-
-    if (!movie) return null;
 
     return (
         <div>
-            <Link to={backLink}>&larr; Go back</Link>
-            <h1>{movie.title} ({movie.release_date.split('-')[0]})</h1>
-            <p>{movie.overview}</p>
-            <h3>Genres</h3>
-            <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
+            <Link to={backLink.current}>Go back</Link> {/* Используем сохранённый маршрут для возврата */}
 
-            <h3>Additional Information</h3>
-            <ul>
-                <li><Link to="cast" state={{ from: backLink }}>Cast</Link></li>
-                <li><Link to="reviews" state={{ from: backLink }}>Reviews</Link></li>
-            </ul>
+            {movie && (
+                <>
+                    <h1>{movie.title} ({movie.release_date.slice(0, 4)})</h1>
+                    <p>User Score: {movie.vote_average * 10}%</p>
+                    <p>{movie.overview}</p>
+                    <p><b>Genres:</b> {movie.genres.map(genre => genre.name).join(', ')}</p>
 
-            <Outlet />
+                    <h3>Additional Information</h3>
+                    <ul>
+                        <li>
+                            <Link to="cast" state={{ from: backLink.current }}>Cast</Link>
+                        </li>
+                        <li>
+                            <Link to="reviews" state={{ from: backLink.current }}>Reviews</Link>
+                        </li>
+                    </ul>
+
+                    <Outlet />
+                </>
+            )}
         </div>
     );
 };

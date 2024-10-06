@@ -1,29 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import MovieList from '../components/MovieList';
-import SearchForm from '../components/SearchForm';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { searchMovies } from '../api';
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
+    const [query, setQuery] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('query') || '';
 
     useEffect(() => {
-        if (query) {
-            searchMovies(query).then(data => setMovies(data.results));
+        const queryFromUrl = searchParams.get('query');
+        if (queryFromUrl) {
+            setQuery(queryFromUrl);
+            searchMovies(queryFromUrl).then(setMovies);
         }
-    }, [query]);
+    }, [searchParams]);
 
-    const handleSearch = (newQuery) => {
-        setSearchParams({ query: newQuery });
+    const handleSearch = (event) => {
+        event.preventDefault();
+        if (query.trim() === '') return;
+        setSearchParams({ query });
     };
 
     return (
         <div>
-            <h1>Movies</h1>
-            <SearchForm onSubmit={handleSearch} />
-            {query && <MovieList movies={movies} />}
+            <h1>Search Movies</h1>
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search movies..."
+                />
+                <button type="submit">Search</button>
+            </form>
+
+            {movies.length > 0 && (
+                <ul>
+                    {movies.map((movie) => (
+                        <li key={movie.id}>
+                            <Link to={`/movies/${movie.id}`} state={{ from: `/movies?query=${query}` }}>
+                                {movie.title}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
