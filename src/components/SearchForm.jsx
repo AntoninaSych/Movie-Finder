@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+// src/components/SearchForm.jsx
+import React from 'react';
 
-const SearchForm = ({ onSubmit }) => {
-    const [query, setQuery] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (query.trim()) {
-            onSubmit(query);
-            setQuery('');
-        }
-    };
-
+const SearchForm = ({ query, setQuery, handleSearch }) => {
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSearch}>
             <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search for a movie..."
+                placeholder="Search movies..."
             />
             <button type="submit">Search</button>
         </form>

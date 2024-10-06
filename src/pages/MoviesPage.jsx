@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { searchMovies } from '../api';
+import SearchForm from '../components/SearchForm';
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
@@ -24,15 +25,7 @@ const MoviesPage = () => {
     return (
         <div>
             <h1>Search Movies</h1>
-            <form onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search movies..."
-                />
-                <button type="submit">Search</button>
-            </form>
+            <SearchForm query={query} setQuery={setQuery} handleSearch={handleSearch} />
 
             {movies.length > 0 && (
                 <ul>
