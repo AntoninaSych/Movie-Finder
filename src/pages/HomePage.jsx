@@ -24,11 +24,9 @@ const HomePage = () => {
         event.preventDefault();
         if (query.trim() === '') return;
 
-        // Выполняем поиск по запросу
         const searchedMovies = await searchMovies(query);
         setMovies(searchedMovies);
 
-        // Обновляем URL
         navigate(`/movies?query=${query}`);
     };
 
