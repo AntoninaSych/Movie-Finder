@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { searchMovies } from '../api';
 import MovieList from '../components/MovieList'; // Импортируем компонент MovieList
+import SearchForm from '../components/SearchForm'; // Импортируем компонент SearchForm
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
@@ -36,27 +37,21 @@ const MoviesPage = () => {
     return (
         <div>
             <h1>Search Movies</h1>
-            <form onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search movies..."
-                />
-                <button type="submit">Search</button>
-            </form>
 
+            {/* Используем компонент SearchForm */}
+            <SearchForm query={query} setQuery={setQuery} handleSearch={handleSearch} />
 
+            {/* Сообщение об ошибке */}
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-
+            {/* Не отображаем результаты, если нет запроса */}
             {hasSearched && (
                 <>
                     {movies.length > 0 ? (
                         <MovieList movies={movies} />
-                        ) : (
+                    ) : (
                         <p>No movies found for your search.</p>
-                        )}
+                    )}
                 </>
             )}
         </div>

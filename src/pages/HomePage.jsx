@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { fetchTrendingMovies, searchMovies } from '../api';
 import SearchForm from '../components/SearchForm';
+import MovieList from '../components/MovieList'; // Импортируем компонент MovieList
 import '../css/HomePage.css';
-
 
 const HomePage = () => {
     const [query, setQuery] = useState('');
@@ -37,13 +37,8 @@ const HomePage = () => {
             <h1>{query ? 'Search Results' : 'Trending Today'}</h1>
             <SearchForm query={query} setQuery={setQuery} handleSearch={handleSearch} />
 
-            <ul>
-                {movies.map(movie => (
-                    <li key={movie.id}>
-                        <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-                    </li>
-                ))}
-            </ul>
+            {/* Используем компонент MovieList для отображения списка фильмов */}
+            <MovieList movies={movies} />
         </div>
     );
 };
