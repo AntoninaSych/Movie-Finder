@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { searchMovies } from '../api';
+import MovieList from '../components/MovieList'; // Импортируем компонент MovieList
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
@@ -45,25 +46,17 @@ const MoviesPage = () => {
                 <button type="submit">Search</button>
             </form>
 
-            {/* Сообщение об ошибке */}
+
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-            {/* Не отображаем результаты, если нет запроса */}
+
             {hasSearched && (
                 <>
                     {movies.length > 0 ? (
-                        <ul>
-                            {movies.map((movie) => (
-                                <li key={movie.id}>
-                                    <Link to={`/movies/${movie.id}`} state={{ from: `/movies?query=${query}` }}>
-                                        {movie.title}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
+                        <MovieList movies={movies} />
+                        ) : (
                         <p>No movies found for your search.</p>
-                    )}
+                        )}
                 </>
             )}
         </div>
