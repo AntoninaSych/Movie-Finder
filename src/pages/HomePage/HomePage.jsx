@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchTrendingMovies, searchMovies } from '../api';
-import SearchForm from '../components/SearchForm';
-import MovieList from '../components/MovieList'; // Импортируем компонент MovieList
-import '../css/HomePage.css';
+import { fetchTrendingMovies, searchMovies } from '../../api.jsx';
+import SearchForm from '../../components/SearchForm/SearchForm.jsx';
+import MovieList from '../../components/MovieList/MovieList.jsx'; // Импортируем компонент MovieList
+import './HomePage.module.css';
 
 const HomePage = () => {
     const [query, setQuery] = useState('');
